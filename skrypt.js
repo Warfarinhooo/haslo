@@ -4,13 +4,35 @@ var iloscDuzeL=0;
 var iloscMaleL=0;
 var iloscCyfr=0;
 var iloscZnakowSp=0;
+
+function reset(){
+    iloscCyfr=0;
+    document.getElementById("iloscCyfr").value=0;
+    document.getElementById("wybieranieCyfr").value=0;
+    iloscMaleL=0;
+    document.getElementById("iloscMaleL").value=0;
+    document.getElementById("wybMaleL").value=0;
+    iloscDuzeL=0;
+    document.getElementById("iloscDuzeL").value=0;
+    document.getElementById("wybDuzeL").value=0;
+    iloscZnakowSp=0;
+    document.getElementById("iloscZnakowSp").value=0;
+    document.getElementById("wybieranieZnakowSp").value=0;
+}
+
 function ustawWolne(){
     iloscWolnychZnakow=+iloscZn-(+iloscDuzeL+ +iloscMaleL+ +iloscCyfr+ +iloscZnakowSp);
+    if (iloscWolnychZnakow<0){
+        reset();
+        alert("funkcja idiotoodporna, za mało znaków");
+    }
     document.getElementById("iloscDuzeL").max=+iloscWolnychZnakow+ +iloscDuzeL;
     document.getElementById("iloscMaleL").max=+iloscWolnychZnakow+ +iloscMaleL;
     document.getElementById("iloscCyfr").max=+iloscWolnychZnakow+ +iloscCyfr;
     document.getElementById("iloscZnakowSp").max=+iloscWolnychZnakow+ +iloscZnakowSp;
+
 }
+
 function wybieranieDuzeL(){
     iloscDuzeL=document.getElementById("iloscDuzeL").value;
     document.getElementById("wybDuzeL").value=iloscDuzeL;
@@ -56,6 +78,10 @@ function generujHaslo(){
     //losowanie znakowSp
     for(let i=0;i<iloscZnakowSp;i++){
         haslo+=znaki[Math.floor(Math.random()*znaki.length)];
+    }
+    // losowanie znaków których nie ma
+    for(let i=0;i<iloscWolnychZnakow;i++){
+        haslo+=alfabetMale.charAt(Math.floor(Math.random()*alfabetMale.length));
     }
         // let dane=zmianaKolejnosci(haslo);
     document.getElementById("haslo").value=zmianaKolejnosci(haslo);
